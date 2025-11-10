@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awtech Gestao de TI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #007bff;
+            --secondary: #6c757d;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --info: #17a2b8;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --border: #dee2e6;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: #495057;
+        }
+        
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .app-header {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .app-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .app-version {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .nav-tabs {
+            background-color: #e9ecef;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .nav-tabs .nav-link {
+            color: #495057;
+            font-weight: 500;
+            border: none;
+            padding: 12px 20px;
+        }
+        
+        .nav-tabs .nav-link.active {
+            background-color: white;
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+        }
+        
+        .tab-content {
+            padding: 20px;
+            min-height: 600px;
+        }
+        
+        .card {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        
+        .card-header {
+            background-color: var(--light);
+            border-bottom: 1px solid var(--border);
+            font-weight: 600;
+            padding: 12px 15px;
+        }
+        
+        .card-body {
+            padding: 15px;
+        }
+        
+        .btn {
+            border-radius: 6px;
+            font-weight: 500;
+            padding: 8px 16px;
+        }
+        
+        .monitor-card {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            height: 180px;
+        }
+        
+        .monitor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .monitor-resources {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+        }
+        
+        .resource-item {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .resource-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .monitor-services {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        
+        .service-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer {
+            background-color: #e9ecef;
+            padding: 10px 20px;
+            text-align: center;
+            color: var(--secondary);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+        }
+        
+        .operations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .operation-btn {
+            height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 10px;
+        }
+        
+        .operation-icon {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        
+        .log-output {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            background-color: #f8f9fa;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .profile-list {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+        }
+        
+        .profile-item {
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .profile-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .profile-item.active {
+            background-color: #e3f2fd;
+            border-left: 3px solid var(--primary);
+        }
+        
+        .status-online { color: var(--success); }
+        .status-offline { color: var(--danger); }
+    </style>
+</head>
+<body>
+    <div class="app-container mt-3 mb-3">
+        <div class="app-header">
+            <h1 class="app-title"><i class="fas fa-tools me-2"></i>Awtech Gestao de TI</h1>
+            <div class="app-version">v1.1.0</div>
+        </div>
+        
+        <ul class="nav nav-tabs" id="mainTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="profiles-tab" data-bs-toggle="tab" data-bs-target="#profiles" type="button" role="tab">
+                    <i class="fas fa-folder me-1"></i> Gestão de Perfis
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="operations-tab" data-bs-toggle="tab" data-bs-target="#operations" type="button" role="tab">
+                    <i class="fas fa-cogs me-1"></i> Operações do Sistema
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="monitoring-tab" data-bs-toggle="tab" data-bs-target="#monitoring" type="button" role="tab">
+                    <i class="fas fa-desktop me-1"></i> Monitoramento
+                </button>
+            </li>
+        </ul>
+        
+        <div class="tab-content" id="mainTabsContent">
+            <!-- Aba de Perfis -->
+            <div class="tab-pane fade show active" id="profiles" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fas fa-list me-1"></i> Perfis Salvos
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between mb-3">
+                                    <div>
+                                        <span class="fw-bold">Total de perfis:</span>
+                                        <span class="badge bg-primary ms-1" id="totalProfiles">0</span>
+                                    </div>
+                                    <div>
+                                        <input type="text" class="form-control form-control-sm" id="searchProfile" placeholder="Buscar...">
+                                    </div>
+                                </div>
+                                <div class="profile-list" id="profileList"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fas fa-edit me-1"></i> Cadastro/Edição de Perfil
+                            </div>
+                            <div class="card-body">
+                                <form id="profileForm">
+                                    <div class="card mb-3">
+                                        <div class="card-header bg-light">
+                                            <i class="fas fa-database me-1"></i> Conexão PostgreSQL
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Nome do Perfil *</label>
+                                                    <input type="text" class="form-control" id="profileName" required>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Host/Endereço *</label>
+                                                    <input type="text" class="form-control" id="profileHost" required>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-3">
+                                                    <label class="form-label">Porta</label>
+                                                    <input type="text" class="form-control" id="profilePort" value="5432">
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <label class="form-label">Base de Dados *</label>
+                                                    <input type="text" class="form-control" id="profileDb" required>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Usuário *</label>
+                                                    <input type="text" class="form-control" id="profileUser" required>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Senha *</label>
+                                                    <input type="password" class="form-control" id="profilePassword" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="card mb-3">
+                                        <div class="card-header bg-light">
+                                            <i class="fas fa-key me-1"></i> Acesso SSH
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Usuário SSH</label>
+                                                    <input type="text" class="form-control" id="sshUser" value="root">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Senha SSH</label>
+                                                    <input type="password" class="form-control" id="sshPassword">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="card mb-3">
+                                        <div class="card-header bg-light">
+                                            <i class="fas fa-store me-1"></i> Tipo de Cadastro
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="profileType" checked>
+                                                <label class="form-check-label" for="profileType">
+                                                    Este perfil é de POSTO (combustível)
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <button type="button" class="btn btn-success" id="saveProfile">
+                                                <i class="fas fa-save me-1"></i> Salvar Perfil
+                                            </button>
+                                            <button type="button" class="btn btn-primary" id="editProfile">
+                                                <i class="fas fa-edit me-1"></i> Editar
+                                            </button>
+                                            <button type="button" class="btn btn-danger" id="deleteProfile">
+                                                <i class="fas fa-trash me-1"></i> Excluir Perfil
+                                            </button>
+                                        </div>
+                                        <div>
+                                            <button type="button" class="btn btn-outline-primary" id="testDb">
+                                                <i class="fas fa-database me-1"></i> Teste de BD
+                                            </button>
+                                            <button type="button" class="btn btn-outline-primary" id="testSsh">
+                                                <i class="fas fa-network-wired me-1"></i> Conexão SSH
+                                            </button>
+                                            <button type="button" class="btn btn-outline-primary" id="testAll">
+                                                <i class="fas fa-vial me-1"></i> Testar Todas
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                                
+                                <div class="mt-3 p-2 border rounded bg-light" id="profileInfo">
+                                    Selecione ou crie um perfil para começar
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Aba de Operações -->
+            <div class="tab-pane fade" id="operations" role="tabpanel">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-cogs me-1"></i> Operações do Sistema
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-8">
+                                <label class="form-label">Selecionar Perfil:</label>
+                                <div class="input-group">
+                                    <select class="form-select" id="operationProfile">
+                                        <option value="">Selecione um perfil...</option>
+                                    </select>
+                                    <button class="btn btn-outline-secondary" type="button" id="refreshProfiles">
+                                        <i class="fas fa-sync-alt"></i> Atualizar Lista
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card mb-4">
+                            <div class="card-header bg-light">
+                                <i class="fas fa-rocket me-1"></i> Operações Principais
+                            </div>
+                            <div class="card-body">
+                                <div class="operations-grid">
+                                    <button class="btn btn-outline-primary operation-btn" id="processPreSale">
+                                        <div class="operation-icon"><i class="fas fa-box"></i></div>
+                                        <div>Processar Pré-Venda</div>
+                                    </button>
+                                    <button class="btn btn-outline-primary operation-btn" id="finishPidModule">
+                                        <div class="operation-icon"><i class="fas fa-stop-circle"></i></div>
+                                        <div>Finalizar PID (Módulo)</div>
+                                    </button>
+                                    <button class="btn btn-outline-primary operation-btn" id="finishPidCode">
+                                        <div class="operation-icon"><i class="fas fa-stop-circle"></i></div>
+                                        <div>Finalizar PID (Código)</div>
+                                    </button>
+                                    <button class="btn btn-outline-primary operation-btn" id="releaseProducts">
+                                        <div class="operation-icon"><i class="fas fa-box-open"></i></div>
+                                        <div>Liberar Produtos</div>
+                                    </button>
+                                    <button class="btn btn-outline-primary operation-btn" id="clearSync">
+                                        <div class="operation-icon"><i class="fas fa-sync"></i></div>
+                                        <div>Limpar Sincronia</div>
+                                    </button>
+                                    <button class="btn btn-outline-primary operation-btn" id="clearPrices">
+                                        <div class="operation-icon"><i class="fas fa-dollar-sign"></i></div>
+                                        <div>Limpar Sincronia (Preços)</div>
+                                    </button>
+                                    <button class="btn btn-outline-primary operation-btn" id="clearSmartPos">
+                                        <div class="operation-icon"><i class="fas fa-cash-register"></i></div>
+                                        <div>Limpar SmartPOS</div>
+                                    </button>
+                                    <button class="btn btn-outline-primary operation-btn" id="manageFueling">
+                                        <div class="operation-icon"><i class="fas fa-gas-pump"></i></div>
+                                        <div>Gerenciar Abastecimentos</div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card mb-4">
+                            <div class="card-header bg-light">
+                                <i class="fas fa-wrench me-1"></i> Sistema e Sincronia
+                            </div>
+                            <div class="card-body">
+                                <div class="operations-grid">
+                                    <button class="btn btn-outline-success operation-btn" id="updateSystem">
+                                        <div class="operation-icon"><i class="fas fa-sync"></i></div>
+                                        <div>Atualizar Sistema</div>
+                                    </button>
+                                    <button class="btn btn-outline-success operation-btn" id="executeSync">
+                                        <div class="operation-icon"><i class="fas fa-exchange-alt"></i></div>
+                                        <div>Executar Sincronia</div>
+                                    </button>
+                                    <button class="btn btn-outline-success operation-btn" id="restartConnections">
+                                        <div class="operation-icon"><i class="fas fa-plug"></i></div>
+                                        <div>Reiniciar Conexões</div>
+                                    </button>
+                                    <button class="btn btn-outline-success operation-btn" id="restartPostgres">
+                                        <div class="operation-icon"><i class="fas fa-database"></i></div>
+                                        <div>Reiniciar PostgreSQL</div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header bg-light">
+                                <i class="fas fa-info-circle me-1"></i> Informações do Sistema
+                            </div>
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <span class="fw-bold">Status:</span>
+                                        <span id="systemStatus" class="ms-2">-</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="fw-bold">Tamanho do banco:</span>
+                                        <span id="dbSize" class="ms-2">-</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover" id="stationsTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Estação</th>
+                                                <th>Versão</th>
+                                                <th>Última atualização</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Aba de Monitoramento -->
+            <div class="tab-pane fade" id="monitoring" role="tabpanel">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-desktop me-1"></i> Monitoramento
+                    </div>
+                    <div class="card-body">
+                        <div class="card mb-4">
+                            <div class="card-header bg-light">
+                                <i class="fas fa-sliders-h me-1"></i> Controles de Monitoramento
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <button class="btn btn-success me-2" id="startMonitoring">
+                                            <i class="fas fa-play me-1"></i> Iniciar Monitoramento
+                                        </button>
+                                        <button class="btn btn-danger me-2" id="stopMonitoring">
+                                            <i class="fas fa-stop me-1"></i> Parar Monitoramento
+                                        </button>
+                                        <button class="btn btn-primary me-2" id="refreshMonitoring">
+                                            <i class="fas fa-sync-alt me-1"></i> Atualizar Agora
+                                        </button>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <label class="form-label me-2 mb-0">Intervalo (segundos):</label>
+                                        <input type="number" class="form-control form-control-sm" id="monitoringInterval" value="60" style="width: 80px;">
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <span id="monitoringStatus">Status: Parado</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="monitoringGrid" class="row"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="d-flex justify-content-between">
+                <div>Awtech - Sistemas - 2025</div>
+                <div>v1.1.0</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modais -->
+    <div class="modal fade" id="testConnectionsModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Testando Conexões...</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="progress mb-3">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" id="testProgress" style="width: 0%"></div>
+                    </div>
+                    <div class="mb-2" id="testStatus">Iniciando...</div>
+                    <div class="log-output test-results" id="testResults"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancelTests">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="preSaleModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Processar Pré-Venda</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Número da pré-venda:</label>
+                        <input type="text" class="form-control" id="preSaleNumber">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="confirmPreSale">Processar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="pidModuleModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Finalizar PID por Módulo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Selecione o módulo:</label>
+                        <div class="border rounded" style="height: 200px; overflow-y: auto;" id="moduleList"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="confirmPidModule">Confirmar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="pidCodeModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Finalizar PID (Código)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Conexões ativas:</label>
+                        <div class="border rounded p-2" style="height: 250px; overflow-y: auto;" id="activeConnections"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label">PID manual:</label>
+                            <input type="text" class="form-control" id="manualPid">
+                        </div>
+                        <div class="col-md-8 d-flex align-items-end">
+                            <button type="button" class="btn btn-primary me-2" id="finishSelectedPid">Finalizar Selecionado / Manual</button>
+                            <button type="button" class="btn btn-danger me-2" id="finishAllPids">Finalizar TODOS</button>
+                            <button type="button" class="btn btn-secondary" id="refreshConnections">Atualizar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="releaseProductsModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Liberar Produtos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Códigos separados por vírgula:</label>
+                        <input type="text" class="form-control" id="productCodes">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="confirmReleaseProducts">Liberar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="fuelingModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Gerenciar Abastecimentos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover" id="fuelingTable">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Bico</th>
+                                    <th>Quantidade</th>
+                                    <th>Valor</th>
+                                    <th>Hora</th>
+                                    <th>Dia Fiscal</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="refreshFueling">Atualizar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const API_BASE = 'http://localhost:5000/api';
+        let profiles = {};
+        let monitoringData = {};
+        let monitoringActive = false;
+        let monitoringInterval = null;
+        let currentProfile = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProfiles();
+            setupEventListeners();
+        });
+
+        async function loadProfiles() {
+            try {
+                const response = await fetch(`${API_BASE}/profiles`);
+                if (response.ok) {
+                    profiles = await response.json();
+                    updateProfileList();
+                    updateOperationProfiles();
+                }
+            } catch (error) {
+                console.error('Erro ao carregar perfis:', error);
+            }
+        }
+
+        function setupEventListeners() {
+            // Perfis
+            document.getElementById('saveProfile').addEventListener('click', saveProfile);
+            document.getElementById('editProfile').addEventListener('click', editProfile);
+            document.getElementById('deleteProfile').addEventListener('click', deleteProfile);
+            document.getElementById('testDb').addEventListener('click', testDatabase);
+            document.getElementById('testSsh').addEventListener('click', testSsh);
+            document.getElementById('testAll').addEventListener('click', testAllConnections);
+            document.getElementById('searchProfile').addEventListener('input', filterProfiles);
+            
+            // Operações
+            document.getElementById('refreshProfiles').addEventListener('click', loadProfiles);
+            document.getElementById('processPreSale').addEventListener('click', showPreSaleModal);
+            document.getElementById('finishPidModule').addEventListener('click', showPidModuleModal);
+            document.getElementById('finishPidCode').addEventListener('click', showPidCodeModal);
+            document.getElementById('releaseProducts').addEventListener('click', showReleaseProductsModal);
+            document.getElementById('manageFueling').addEventListener('click', showFuelingModal);
+            document.getElementById('clearSync').addEventListener('click', clearSync);
+            document.getElementById('clearPrices').addEventListener('click', clearPrices);
+            document.getElementById('clearSmartPos').addEventListener('click', clearSmartPos);
+            document.getElementById('updateSystem').addEventListener('click', updateSystem);
+            document.getElementById('executeSync').addEventListener('click', executeSync);
+            document.getElementById('restartConnections').addEventListener('click', restartConnections);
+            document.getElementById('restartPostgres').addEventListener('click', restartPostgres);
+            document.getElementById('operationProfile').addEventListener('change', updateSystemInfo);
+            
+            // Monitoramento
+            document.getElementById('startMonitoring').addEventListener('click', startMonitoring);
+            document.getElementById('stopMonitoring').addEventListener('click', stopMonitoring);
+            document.getElementById('refreshMonitoring').addEventListener('click', refreshMonitoring);
+            
+            // Modais
+            document.getElementById('confirmPreSale').addEventListener('click', processPreSale);
+            document.getElementById('confirmPidModule').addEventListener('click', finishPidModule);
+            document.getElementById('finishSelectedPid').addEventListener('click', finishSelectedPid);
+            document.getElementById('finishAllPids').addEventListener('click', finishAllPids);
+            document.getElementById('refreshConnections').addEventListener('click', refreshConnectionsModal);
+            document.getElementById('confirmReleaseProducts').addEventListener('click', releaseProducts);
+            document.getElementById('refreshFueling').addEventListener('click', refreshFuelingModal);
+            document.getElementById('cancelTests').addEventListener('click', cancelTests);
+        }
+
+        function updateProfileList() {
+            const profileList = document.getElementById('profileList');
+            const searchTerm = document.getElementById('searchProfile').value.toLowerCase();
+            
+            profileList.innerHTML = '';
+            
+            Object.keys(profiles).sort().forEach(name => {
+                if (name.toLowerCase().includes(searchTerm)) {
+                    const profileItem = document.createElement('div');
+                    profileItem.className = 'profile-item';
+                    profileItem.textContent = name;
+                    profileItem.addEventListener('click', () => selectProfile(name));
+                    profileList.appendChild(profileItem);
+                }
+            });
+            
+            document.getElementById('totalProfiles').textContent = Object.keys(profiles).length;
+        }
+
+        function updateOperationProfiles() {
+            const operationProfile = document.getElementById('operationProfile');
+            operationProfile.innerHTML = '<option value="">Selecione um perfil...</option>';
+            
+            Object.keys(profiles).sort().forEach(name => {
+                const option = document.createElement('option');
+                option.value = name;
+                option.textContent = name;
+                operationProfile.appendChild(option);
+            });
+        }
+
+        function selectProfile(name) {
+            currentProfile = name;
+            const profileItems = document.querySelectorAll('.profile-item');
+            profileItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.textContent === name) item.classList.add('active');
+            });
+            
+            const profile = profiles[name];
+            document.getElementById('profileName').value = name;
+            document.getElementById('profileHost').value = profile.host || '';
+            document.getElementById('profilePort').value = profile.port || '5432';
+            document.getElementById('profileDb').value = profile.db || '';
+            document.getElementById('profileUser').value = profile.user || '';
+            document.getElementById('profilePassword').value = profile.password || '';
+            document.getElementById('sshUser').value = profile.ssh_user || 'root';
+            document.getElementById('sshPassword').value = profile.ssh_pass || '';
+            document.getElementById('profileType').checked = profile.tipo_posto !== false;
+            
+            document.getElementById('profileInfo').textContent = `Editando perfil: ${name}`;
+        }
+
+        async function saveProfile() {
+            const name = document.getElementById('profileName').value.trim();
+            const host = document.getElementById('profileHost').value.trim();
+            const db = document.getElementById('profileDb').value.trim();
+            const user = document.getElementById('profileUser').value.trim();
+            const password = document.getElementById('profilePassword').value.trim();
+            const port = document.getElementById('profilePort').value.trim() || '5432';
+            const sshUser = document.getElementById('sshUser').value.trim();
+            const sshPass = document.getElementById('sshPassword').value.trim();
+            const tipoPosto = document.getElementById('profileType').checked;
+            
+            if (!name || !host || !db || !user || !password) {
+                alert('Preencha todos os campos obrigatórios');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/profiles`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        name, host, port, db, user, password, ssh_user: sshUser, ssh_pass: sshPass, tipo_posto: tipoPosto
+                    })
+                });
+                
+                const result = await response.json();
+                alert(response.ok ? result.message : result.error);
+                if (response.ok) {
+                    await loadProfiles();
+                    clearProfileForm();
+                }
+            } catch (error) {
+                alert('Erro ao salvar perfil');
+            }
+        }
+
+        async function deleteProfile() {
+            if (!currentProfile) {
+                alert('Selecione um perfil para excluir');
+                return;
+            }
+            
+            if (!confirm(`Excluir perfil '${currentProfile}'?`)) return;
+            
+            try {
+                const response = await fetch(`${API_BASE}/profiles/${currentProfile}`, {method: 'DELETE'});
+                const result = await response.json();
+                alert(response.ok ? result.message : result.error);
+                if (response.ok) {
+                    await loadProfiles();
+                    clearProfileForm();
+                }
+            } catch (error) {
+                alert('Erro ao excluir perfil');
+            }
+        }
+
+        function clearProfileForm() {
+            document.getElementById('profileName').value = '';
+            document.getElementById('profileHost').value = '';
+            document.getElementById('profilePort').value = '5432';
+            document.getElementById('profileDb').value = '';
+            document.getElementById('profileUser').value = '';
+            document.getElementById('profilePassword').value = '';
+            document.getElementById('sshUser').value = 'root';
+            document.getElementById('sshPassword').value = '';
+            document.getElementById('profileType').checked = true;
+            document.getElementById('profileInfo').textContent = 'Campos limpos. Pronto para novo cadastro.';
+            
+            const profileItems = document.querySelectorAll('.profile-item');
+            profileItems.forEach(item => item.classList.remove('active'));
+            currentProfile = null;
+        }
+
+        async function testDatabase() {
+            if (!currentProfile) {
+                alert('Selecione um perfil para testar');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/test/db`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({profile_name: currentProfile})
+                });
+                const result = await response.json();
+                alert(response.ok ? result.message : result.error);
+            } catch (error) {
+                alert('Erro ao testar banco');
+            }
+        }
+
+        async function testSsh() {
+            if (!currentProfile) {
+                alert('Selecione um perfil para testar');
+                return;
+            }
+            
+            const profile = profiles[currentProfile];
+            if (!profile.host || !profile.ssh_user || !profile.ssh_pass) {
+                alert('SSH não configurado');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/test/ssh`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({profile_name: currentProfile})
+                });
+                const result = await response.json();
+                alert(response.ok ? result.message : result.error);
+            } catch (error) {
+                alert('Erro ao testar SSH');
+            }
+        }
+
+        async function testAllConnections() {
+            if (Object.keys(profiles).length === 0) {
+                alert('Nenhum perfil cadastrado');
+                return;
+            }
+            
+            const modal = new bootstrap.Modal(document.getElementById('testConnectionsModal'));
+            modal.show();
+            
+            try {
+                const response = await fetch(`${API_BASE}/test/all`, {method: 'POST'});
+                const result = await response.json();
+                
+                const testResults = document.getElementById('testResults');
+                testResults.innerHTML = '';
+                
+                if (response.ok) {
+                    result.results.forEach(r => testResults.innerHTML += r + '\n');
+                    document.getElementById('testStatus').textContent = 'Testes concluídos!';
+                } else {
+                    testResults.innerHTML = 'Erro: ' + result.error;
+                }
+            } catch (error) {
+                document.getElementById('testResults').innerHTML = 'Erro de conexão';
+            }
+        }
+
+        function cancelTests() {
+            const modal = bootstrap.Modal.getInstance(document.getElementById('testConnectionsModal'));
+            modal.hide();
+        }
+
+        // Operações do Sistema
+        async function processPreSale() {
+            const number = document.getElementById('preSaleNumber').value;
+            const profileName = document.getElementById('operationProfile').value;
+            
+            if (!number || !profileName) {
+                alert('Preencha todos os campos');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/operations/processar-prevenda`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({profile_name: profileName, numero: number})
+                });
+                const result = await response.json();
+                alert(response.ok ? result.message : result.error);
+                
+                if (response.ok) {
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('preSaleModal'));
+                    modal.hide();
+                }
+            } catch (error) {
+                alert('Erro ao processar pré-venda');
+            }
+        }
+
+        async function finishPidModule() {
+            const selected = document.querySelector('#moduleList .bg-primary');
+            const profileName = document.getElementById('operationProfile').value;
+            
+            if (!selected || !profileName) {
+                alert('Selecione um módulo e perfil');
+                return;
+            }
+            
+            const modulo = selected.textContent;
+            
+            try {
+                const response = await fetch(`${API_BASE}/operations/finalizar-pid-modulo`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({profile_name: profileName, modulo})
+                });
+                const result = await response.json();
+                alert(response.ok ? result.message : result.error);
+                
+                if (response.ok) {
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('pidModuleModal'));
+                    modal.hide();
+                }
+            } catch (error) {
+                alert('Erro ao finalizar PID');
+            }
+        }
+
+        async function finishSelectedPid() {
+            const selected = document.querySelector('#activeConnections .bg-primary');
+            const manualPid = document.getElementById('manualPid').value.trim();
+            const profileName = document.getElementById('operationProfile').value;
+            
+            let pid;
+            if (selected) {
+                pid = selected.textContent.split('|')[0].trim();
+            } else if (manualPid) {
+                pid = manualPid;
+            } else {
+                alert('Selecione um PID ou digite manualmente');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/operations/finalizar-pid-codigo`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({profile_name: profileName, pid})
+                });
+                const result = await response.json();
+                alert(response.ok ? result.message : result.error);
+                if (response.ok) refreshConnectionsModal();
+            } catch (error) {
+                alert('Erro ao finalizar PID');
+            }
+        }
+
+        async function finishAllPids() {
+            const profileName = document.getElementById('operationProfile').value;
+            if (!profileName) {
+                alert('Selecione um perfil');
+                return;
+            }
+            
+            if (!confirm('Finalizar TODAS as conexões?')) return;
+            
+            try {
+                const response = await fetch(`${API_BASE}/operations/finalizar-todos-pids`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({profile_name: profileName})
+                });
+                const result = await response.json();
+                alert(response.ok ? result.message : result.error);
+                if (response.ok) refreshConnectionsModal();
+            } catch (error) {
+                alert('Erro ao finalizar conexões');
+            }
+        }
+
+        async function releaseProducts() {
+            const codes = document.getElementById('productCodes').value;
+            const profileName = document.getElementById('operationProfile').value;
+            
+            if (!codes || !profileName) {
+                alert('Preencha todos os campos');
+                return;
+            }
+            
+            const codeList = codes.split(',').map(c => c.trim()).filter(c => c);
+            
+            try {
+                const response = await fetch(`${API_BASE}/operations/liberar-produtos`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({profile_name: profileName, codigos: codeList})
+                });
+                const result = await response.json();
+                alert(response.ok ? result.message : result.error);
+                
+                if (response.ok) {
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('releaseProductsModal'));
+                    modal.hide();
+                }
+            } catch (error) {
+                alert('Erro ao liberar produtos');
+            }
+        }
+
+        async function refreshFuelingModal() {
+            const profileName = document.getElementById('operationProfile').value;
+            if (!profileName) return;
+            
+            try {
+                const response = await fetch(`${API_BASE}/operations/abastecimentos`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({profile_name: profileName})
+                });
+                const result = await response.json();
+                
+                const tbody = document.querySelector('#fuelingTable tbody');
+                tbody.innerHTML = '';
+                
+                if (response.ok) {
+                    result.abastecimentos.forEach(item => {
+                        const row = tbody.insertRow();
+                        row.insertCell(0).textContent = item.codigo;
+                        row.insertCell(1).textContent = item.bico;
+                        row.insertCell(2).textContent = item.quantidade;
+                        row.insertCell(3).textContent = item.valor;
+                        row.insertCell(4).textContent = item.hora;
+                        row.insertCell(5).textContent = item.dia_fiscal;
+                        
+                        const actionsCell = row.insertCell(6);
+                        const deleteBtn = document.createElement('button');
+                        deleteBtn.className = 'btn btn-sm btn-danger';
+                        deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+                        deleteBtn.addEventListener('click', () => deleteAbastecimento(item.codigo, profileName));
+                        actionsCell.appendChild(deleteBtn);
+                    });
+                } else {
+                    alert(result.error);
+                }
+            } catch (error) {
+                alert('Erro ao carregar abastecimentos');
+            }
+        }
+
+        async function deleteAbastecimento(codigo, profileName) {
+            if (!confirm(`Excluir abastecimento ${codigo}?`)) return;
+            
+            try {
+                const response = await fetch(`${API_BASE}/operations/excluir-abastecimento`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({profile_name: profileName, codigo})
+                });
+                const result = await response.json();
+                alert(response.ok ? result.message : result.error);
+                if (response.ok) refreshFuelingModal();
+            } catch (error) {
+                alert('Erro ao excluir abastecimento');
+            }
+        }
+
+        // ... (continua com as outras funções de operações)
+
+        // Monitoramento
+        function startMonitoring() {
+            if (monitoringActive) return;
+            monitoringActive = true;
+            document.getElementById('monitoringStatus').textContent = 'Status: Monitorando...';
+            collectMonitoringData();
+            updateMonitoringInterface();
+            
+            const interval = parseInt(document.getElementById('monitoringInterval').value) * 1000;
+            monitoringInterval = setInterval(() => {
+                if (monitoringActive) {
+                    collectMonitoringData();
+                    updateMonitoringInterface();
+                }
+            }, interval);
+        }
+
+        function stopMonitoring() {
+            monitoringActive = false;
+            if (monitoringInterval) {
+                clearInterval(monitoringInterval);
+                monitoringInterval = null;
+            }
+            document.getElementById('monitoringStatus').textContent = 'Status: Parado';
+        }
+
+        async function collectMonitoringData() {
+            const postoProfiles = Object.keys(profiles).filter(name => 
+                profiles[name] && profiles[name].tipo_posto
+            );
+            
+            if (postoProfiles.length === 0) return;
+            
+            try {
+                const response = await fetch(`${API_BASE}/monitoring/data`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({profiles: postoProfiles})
+                });
+                if (response.ok) {
+                    monitoringData = await response.json();
+                }
+            } catch (error) {
+                console.error('Erro ao coletar dados:', error);
+            }
+        }
+
+        function updateMonitoringInterface() {
+            const monitoringGrid = document.getElementById('monitoringGrid');
+            monitoringGrid.innerHTML = '';
+            
+            const postoProfiles = Object.keys(monitoringData).filter(name => 
+                profiles[name] && profiles[name].tipo_posto
+            ).sort();
+            
+            let onlineCount = 0;
+            
+            postoProfiles.forEach(name => {
+                const data = monitoringData[name];
+                if (data.online) onlineCount++;
+                
+                const col = document.createElement('div');
+                col.className = 'col-md-3';
+                
+                const card = document.createElement('div');
+                card.className = 'monitor-card';
+                
+                // Cabeçalho
+                const header = document.createElement('div');
+                header.className = 'monitor-header';
+                header.innerHTML = `
+                    <div class="monitor-status">${data.online ? '🟢' : '🔴'} ${name}</div>
+                    <div class="text-muted small">⏱️ ${data.uptime_short || 'N/A'}</div>
+                `;
+                card.appendChild(header);
+                
+                if (!data.online) {
+                    const error = document.createElement('div');
+                    error.className = 'text-center my-4 text-danger';
+                    error.textContent = data.erro || 'Sem conexão';
+                    card.appendChild(error);
+                } else {
+                    // Processador
+                    const processor = document.createElement('div');
+                    processor.className = 'small';
+                    processor.textContent = data.processador || 'N/A';
+                    card.appendChild(processor);
+                    
+                    // Recursos
+                    const resources = document.createElement('div');
+                    resources.className = 'monitor-resources';
+                    resources.innerHTML = `
+                        <div class="resource-item">
+                            <div class="resource-value" style="color: ${getUsageColor(data.cpu_uso)}">${data.cpu_uso}%</div>
+                            <div class="resource-label">CPU</div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-value" style="color: ${getUsageColor(data.memoria_percent)}">${data.memoria_percent}%</div>
+                            <div class="resource-label">RAM</div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-value" style="color: ${getUsageColor(data.disco_percent)}">${data.disco_percent}%</div>
+                            <div class="resource-label">HD</div>
+                        </div>
+                    `;
+                    card.appendChild(resources);
+                    
+                    // Serviços
+                    const services = document.createElement('div');
+                    services.className = 'monitor-services';
+                    services.innerHTML = `
+                        <div class="service-item">🐘 ${data.postgres_version} ${data.postgres_status ? '✅' : '❌'}</div>
+                        <div class="service-item">📡 ${data.latencia}</div>
+                        <div class="service-item text-muted small">🔄 ${data.ultima_coleta}</div>
+                    `;
+                    card.appendChild(services);
+                }
+                
+                col.appendChild(card);
+                monitoringGrid.appendChild(col);
+            });
+            
+            if (monitoringActive) {
+                document.getElementById('monitoringStatus').textContent = 
+                    `Status: Monitorando... (${onlineCount}/${postoProfiles.length} online)`;
+            }
+        }
+
+        function getUsageColor(percent) {
+            if (percent < 70) return '#28a745';
+            if (percent < 85) return '#ffc107';
+            return '#dc3545';
+        }
+
+        // Funções auxiliares para modais
+        function showPreSaleModal() {
+            if (!document.getElementById('operationProfile').value) {
+                alert('Selecione um perfil primeiro');
+                return;
+            }
+            new bootstrap.Modal(document.getElementById('preSaleModal')).show();
+        }
+
+        function showPidModuleModal() {
+            if (!document.getElementById('operationProfile').value) {
+                alert('Selecione um perfil primeiro');
+                return;
+            }
+            
+            const moduleList = document.getElementById('moduleList');
+            moduleList.innerHTML = '';
+            
+            const modules = ['sync', 'sync_precos', 'smartpos', 'monitor_smart', 'frente_caixa'];
+            modules.forEach(module => {
+                const div = document.createElement('div');
+                div.className = 'p-2 border-bottom';
+                div.textContent = module;
+                div.style.cursor = 'pointer';
+                div.addEventListener('click', function() {
+                    const selected = moduleList.querySelector('.bg-primary.text-white');
+                    if (selected) selected.classList.remove('bg-primary', 'text-white');
+                    this.classList.add('bg-primary', 'text-white');
+                });
+                moduleList.appendChild(div);
+            });
+            
+            new bootstrap.Modal(document.getElementById('pidModuleModal')).show();
+        }
+
+        function showPidCodeModal() {
+            if (!document.getElementById('operationProfile').value) {
+                alert('Selecione um perfil primeiro');
+                return;
+            }
+            refreshConnectionsModal();
+            new bootstrap.Modal(document.getElementById('pidCodeModal')).show();
+        }
+
+        async function refreshConnectionsModal() {
+            const profileName = document.getElementById('operationProfile').value;
+            if (!profileName) return;
+            
+            try {
+                const response = await fetch(`${API_BASE}/operations/conexoes-ativas`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({profile_name: profileName})
+                });
+                const result = await response.json();
+                
+                const connectionsList = document.getElementById('activeConnections');
+                connectionsList.innerHTML = '';
+                
+                if (response.ok) {
+                    result.conexoes.forEach(conn => {
+                        const div = document.createElement('div');
+                        div.className = 'p-2 border-bottom';
+                        div.textContent = `${conn.pid} | ${conn.usuario} | ${conn.aplicacao} | ${conn.ip} | ${conn.tempo} | ${conn.query}`;
+                        div.style.cursor = 'pointer';
+                        div.addEventListener('click', function() {
+                            const selected = connectionsList.querySelector('.bg-primary.text-white');
+                            if (selected) selected.classList.remove('bg-primary', 'text-white');
+                            this.classList.add('bg-primary', 'text-white');
+                        });
+                        connectionsList.appendChild(div);
+                    });
+                }
+            } catch (error) {
+                console.error('Erro ao carregar conexões:', error);
+            }
+        }
+
+        function showReleaseProductsModal() {
+            new bootstrap.Modal(document.getElementById('releaseProductsModal')).show();
+        }
+
+        function showFuelingModal() {
+            if (!document.getElementById('operationProfile').value) {
+                alert('Selecione um perfil primeiro');
+                return;
+            }
+            refreshFuelingModal();
+            new bootstrap.Modal(document.getElementById('fuelingModal')).show();
+        }
+
+        function filterProfiles() {
+            updateProfileList();
+        }
+
+        function editProfile() {
+            if (!currentProfile) {
+                alert('Selecione um perfil para editar');
+                return;
+            }
+        }
+
+        // Funções restantes das operações (clearSync, clearPrices, etc.)
+        async function clearSync() {
+            await executeOperation('limpar-sincronia', 'Limpar Sincronia');
+        }
+
+        async function clearPrices() {
+            await executeOperation('limpar-precos', 'Limpar Sincronia de Preços');
+        }
+
+        async function clearSmartPos() {
+            await executeOperation('limpar-smartpos', 'Limpar SmartPOS');
+        }
+
+        async function updateSystem() {
+            await executeOperation('atualizar-sistema', 'Atualizar Sistema', true);
+        }
+
+        async function executeSync() {
+            await executeOperation('executar-sincronia', 'Executar Sincronia', true);
+        }
+
+        async function restartConnections() {
+            if (!confirm('Reiniciar todas as conexões?')) return;
+            await executeOperation('reiniciar-conexoes', 'Reiniciar Conexões');
+        }
+
+        async function restartPostgres() {
+            if (!confirm('Reiniciar PostgreSQL?')) return;
+            await executeOperation('reiniciar-postgres', 'Reiniciar PostgreSQL');
+        }
+
+        async function executeOperation(endpoint, operationName, showOutput = false) {
+            const profileName = document.getElementById('operationProfile').value;
+            if (!profileName) {
+                alert('Selecione um perfil primeiro');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/operations/${endpoint}`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({profile_name: profileName})
+                });
+                const result = await response.json();
+                
+                if (response.ok) {
+                    let message = result.message;
+                    if (showOutput && result.output) {
+                        message += `\n\nSaída:\n${result.output}`;
+                    }
+                    alert(message);
+                } else {
+                    let error = result.error;
+                    if (showOutput && result.details) {
+                        error += `\n\nDetalhes:\n${result.details}`;
+                    }
+                    alert(error);
+                }
+            } catch (error) {
+                alert(`Erro ao ${operationName.toLowerCase()}`);
+            }
+        }
+
+        async function updateSystemInfo() {
+            const profileName = document.getElementById('operationProfile').value;
+            if (!profileName) {
+                document.getElementById('systemStatus').textContent = '-';
+                document.getElementById('dbSize').textContent = '-';
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/operations/info-sistema`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({profile_name: profileName})
+                });
+                const result = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('systemStatus').innerHTML = '<span class="text-success">Online</span>';
+                    document.getElementById('dbSize').textContent = `${result.tamanho_banco} GB`;
+                    
+                    const tbody = document.querySelector('#stationsTable tbody');
+                    tbody.innerHTML = '';
+                    
+                    result.estacoes.forEach(estacao => {
+                        const row = tbody.insertRow();
+                        row.insertCell(0).textContent = estacao.estacao;
+                        row.insertCell(1).textContent = estacao.versao;
+                        row.insertCell(2).textContent = estacao.ts_atualizacao;
+                    });
+                } else {
+                    document.getElementById('systemStatus').innerHTML = '<span class="text-danger">Offline</span>';
+                    document.getElementById('dbSize').textContent = '-';
+                }
+            } catch (error) {
+                document.getElementById('systemStatus').innerHTML = '<span class="text-danger">Erro</span>';
+                document.getElementById('dbSize').textContent = '-';
+            }
+        }
+
+        function refreshMonitoring() {
+            collectMonitoringData();
+            updateMonitoringInterface();
+        }
+    </script>
+</body>
+</html>
