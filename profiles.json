@@ -1,0 +1,322 @@
+{
+    "RM - Camburi - Loja": {
+        "host": "pcamburi.sytes.net",
+        "port": "5432",
+        "db": "autosystem",
+        "user": "postgres",
+        "password": "RM5595",
+        "ssh_user": "",
+        "ssh_pass": "",
+        "tipo_posto": false
+    },
+    "RM - Praia da Costa - Loja": {
+        "host": "praiadacosta.sytes.net",
+        "port": "5432",
+        "db": "loja",
+        "user": "postgres",
+        "password": "RM5595",
+        "ssh_user": "lipcar",
+        "ssh_pass": "rm102030",
+        "tipo_posto": false
+    },
+    "RM - Praia da Costa - Posto": {
+        "host": "praiadacosta.sytes.net",
+        "port": "5432",
+        "db": "autosystem",
+        "user": "postgres",
+        "password": "rm102030",
+        "ssh_user": "lipcar",
+        "ssh_pass": "rm102030",
+        "tipo_posto": true
+    },
+    "RM - Mediterraneo - Posto": {
+        "host": "mediterraneo.systes.net",
+        "port": 5432,
+        "db": "autosystem",
+        "user": "postgres",
+        "password": "RM5595",
+        "ssh_user": "",
+        "ssh_pass": "",
+        "tipo_posto": true
+    },
+    "RM - Mediterraneo - Loja": {
+        "host": "mediterraneo.systes.net",
+        "port": "5432",
+        "db": "loja",
+        "user": "postgres",
+        "password": "RM5595",
+        "ssh_user": "",
+        "ssh_pass": "",
+        "tipo_posto": false
+    },
+    "RM - Marcela - Posto": {
+        "host": "postomarcela.sytes.net",
+        "port": "5432",
+        "db": "autosystem",
+        "user": "postgres",
+        "password": "RM5595",
+        "ssh_user": "marcela",
+        "ssh_pass": "rm102030",
+        "tipo_posto": true
+    },
+    "RM - Marcela - Loja": {
+        "host": "postomarcela.sytes.net",
+        "port": "5432",
+        "db": "loja",
+        "user": "postgres",
+        "password": "RM5595",
+        "ssh_user": "",
+        "ssh_pass": "",
+        "tipo_posto": false
+    },
+    "RM - Eucalipto - Posto": {
+        "host": "peucalipto.sytes.net",
+        "port": "5432",
+        "db": "autosystem",
+        "user": "postgres",
+        "password": "RM5595",
+        "ssh_user": "servidor",
+        "ssh_pass": "rm102030",
+        "tipo_posto": true
+    },
+    "RM - Eucalipto - Loja": {
+        "host": "peucalipto.sytes.net",
+        "port": "5432",
+        "db": "loja",
+        "user": "postgres",
+        "password": "RM5595",
+        "ssh_user": "",
+        "ssh_pass": "",
+        "tipo_posto": false
+    },
+    "RM - Escola - Loja": {
+        "host": "pescola.sytes.net",
+        "port": "5432",
+        "db": "loja",
+        "user": "postgres",
+        "password": "santosdumont",
+        "ssh_user": "escola",
+        "ssh_pass": "rm102030",
+        "tipo_posto": false
+    },
+    "RM - Escola - Posto": {
+        "host": "pescola.sytes.net",
+        "port": "5432",
+        "db": "autosystem",
+        "user": "postgres",
+        "password": "santosdumont",
+        "ssh_user": "escola",
+        "ssh_pass": "rm102030",
+        "tipo_posto": true
+    },
+    "RM - Camburi - Posto": {
+        "host": "pcamburi.sytes.net",
+        "port": "5432",
+        "db": "autosystem",
+        "user": "postgres",
+        "password": "RM102030",
+        "ssh_user": "",
+        "ssh_pass": "",
+        "tipo_posto": true
+    },
+    "RM - Belo - Loja": {
+        "host": "belo.sytes.net",
+        "port": "5432",
+        "db": "loja",
+        "user": "postgres",
+        "password": "RM5595",
+        "ssh_user": "belo",
+        "ssh_pass": "RM5595",
+        "tipo_posto": false
+    },
+    "RM - Belo - Posto": {
+        "host": "belo.sytes.net",
+        "port": "5432",
+        "db": "autosystem",
+        "user": "postgres",
+        "password": "RM5595",
+        "ssh_user": "belo",
+        "ssh_pass": "RM5595",
+        "tipo_posto": true
+    },
+    "RM - Araças - Loja": {
+        "host": "postoaracas.sytes.net",
+        "port": "5432",
+        "db": "loja",
+        "user": "postgres",
+        "password": "RM5595",
+        "ssh_user": "aracas",
+        "ssh_pass": "rm102030",
+        "tipo_posto": false
+    },
+    "RM - Araças - Posto": {
+        "host": "postoaracas.sytes.net",
+        "port": "5432",
+        "db": "autosystem",
+        "user": "postgres",
+        "password": "RM5595",
+        "ssh_user": "aracas",
+        "ssh_pass": "rm102030",
+        "tipo_posto": true
+    },
+    "RM - Cariacica - Posto": {
+        "host": "pcariacica.sytes.net",
+        "port": "5432",
+        "db": "autosystem",
+        "user": "postgres",
+        "password": "RM5595",
+        "ssh_user": "",
+        "ssh_pass": "",
+        "tipo_posto": true
+    },
+    "RM - Central - Posto": {
+        "host": "pcentral.sytes.net",
+        "port": "5432",
+        "db": "autosystem",
+        "user": "postgres",
+        "password": "Lu@1marcela",
+        "ssh_user": "central",
+        "ssh_pass": "rm102030",
+        "tipo_posto": true
+    },
+    "RM - Central - Loja": {
+        "host": "pcentral.sytes.net",
+        "port": "5432",
+        "db": "loja",
+        "user": "postgres",
+        "password": "Lu@1marcela",
+        "ssh_user": "",
+        "ssh_pass": "",
+        "tipo_posto": false
+    },
+    "RM - Jardim America - Loja": {
+        "host": "pjardimamerica.sytes.net",
+        "port": "5432",
+        "db": "loja",
+        "user": "postgres",
+        "password": "RM5595",
+        "ssh_user": "jardimamerica",
+        "ssh_pass": "rm102030",
+        "tipo_posto": false
+    },
+    "RM - Jardim America - Posto": {
+        "host": "pjardimamerica.sytes.net",
+        "port": "5432",
+        "db": "autosystem",
+        "user": "postgres",
+        "password": "RM5595",
+        "ssh_user": "jardimamerica",
+        "ssh_pass": "rm102030",
+        "tipo_posto": true
+    },
+    "RM - Mais - Posto": {
+        "host": "maiscariacica.sytes.net",
+        "port": 5432,
+        "db": "autosystem",
+        "user": "postgres",
+        "password": "RM5595",
+        "ssh_user": "",
+        "ssh_pass": "",
+        "tipo_posto": true
+    },
+    "RM - Monza - Posto": {
+        "host": "monza.sytes.net",
+        "port": "5432",
+        "db": "autosystem",
+        "user": "postgres",
+        "password": "rm5595",
+        "ssh_user": "monza",
+        "ssh_pass": "rm102030",
+        "tipo_posto": true
+    },
+    "RM - Monza - Loja": {
+        "host": "monza.sytes.net",
+        "port": "5432",
+        "db": "loja",
+        "user": "postgres",
+        "password": "rm5595",
+        "ssh_user": "",
+        "ssh_pass": "",
+        "tipo_posto": false
+    },
+    "RM - Norte Sul - Loja": {
+        "host": "nortesul.sytes.net",
+        "port": "5432",
+        "db": "loja",
+        "user": "postgres",
+        "password": "RM5595",
+        "ssh_user": "",
+        "ssh_pass": "",
+        "tipo_posto": false
+    },
+    "RM - Norte Sul - Posto": {
+        "host": "nortesul.sytes.net",
+        "port": "5432",
+        "db": "autosystem",
+        "user": "postgres",
+        "password": "RM5595",
+        "ssh_user": "nortesul",
+        "ssh_pass": "rm102030",
+        "tipo_posto": true
+    },
+    "RM - Oliva - Posto": {
+        "host": "oliva.sytes.net",
+        "port": "5432",
+        "db": "autosystem",
+        "user": "postgres",
+        "password": "Lu@1marcela",
+        "ssh_user": "oliva",
+        "ssh_pass": "rm102030",
+        "tipo_posto": true
+    },
+    "RM - Oliva - Loja": {
+        "host": "oliva.sytes.net",
+        "port": "5432",
+        "db": "loja",
+        "user": "postgres",
+        "password": "Lu@1marcela",
+        "ssh_user": "",
+        "ssh_pass": "",
+        "tipo_posto": false
+    },
+    "RM - Thiago - Posto": {
+        "host": "pthiago.sytes.net",
+        "port": 5432,
+        "db": "autosystem",
+        "user": "postgres",
+        "password": "RM5595",
+        "ssh_user": "",
+        "ssh_pass": "",
+        "tipo_posto": true
+    },
+    "RM - Viana - Posto": {
+        "host": "pviana.sytes.net",
+        "port": "5432",
+        "db": "autosystem",
+        "user": "postgres",
+        "password": "RM5595",
+        "ssh_user": "aracas",
+        "ssh_pass": "rm102030",
+        "tipo_posto": true
+    },
+    "RM - Viana - Loja": {
+        "host": "pviana.sytes.net",
+        "port": "5432",
+        "db": "loja",
+        "user": "postgres",
+        "password": "RM5595",
+        "ssh_user": "",
+        "ssh_pass": "",
+        "tipo_posto": false
+    },
+    "CDH": {
+        "host": "cdh.sytes.net",
+        "port": "5432",
+        "db": "autosystem",
+        "user": "autosystem_alex",
+        "password": "Asss2022@",
+        "ssh_user": "ti_cdh",
+        "ssh_pass": "iG78fq2#gl7g",
+        "tipo_posto": true
+    }
+}
